@@ -3,8 +3,7 @@
 #include <string.h>
 
 char *take_number(FILE *input);
-int gamma_epsilon(const int *count_of_1, int size,
-                  int count);
+int gamma_epsilon(const int *count_of_1, int size, int count);
 int to_decimal(char *number);
 
 char often_bit(char **numbers, int size, int j);
