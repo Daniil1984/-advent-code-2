@@ -4,7 +4,7 @@
 
 char *take_number(FILE *input);
 int gamma_epsilon(const int *count_of_1, int size,
-                  int count); 
+                  int count);
 
 int to_decimal(char *number);
 
@@ -99,7 +99,6 @@ char *take_number(FILE *input)
     char *number = NULL;
     int length = 0;
     char c;
-    
     int res;
 
     while ((res = fscanf(input, "%c", &c) == 1) && c != '\n') {
