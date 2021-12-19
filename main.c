@@ -3,10 +3,15 @@
 #include <string.h>
 
 char *take_number(FILE *input);
-int gamma_epsilon(int *count_of_1, int size, int count);
+int gamma_epsilon(const int *count_of_1, int size,
+                  int count); 
+
 int to_decimal(char *number);
+
 char often_bit(char **numbers, int size, int j);
+
 char *oxygen(char **numbers, int size, int j);
+
 char *CO2(char **numbers, int size, int j);
 
 int main(int argc, char *argv[argc])
@@ -21,7 +26,7 @@ int main(int argc, char *argv[argc])
     char *number;
     int count = 0;
     while ((number = take_number(input)) != NULL) {
-        int len = strlen(number);
+        int len = (int)strlen(number);
         if (size == 0) {
             count_of_1 = realloc(count_of_1, len * sizeof(int));
             for (int i = size; i < len; i++) {
@@ -74,6 +79,7 @@ int main(int argc, char *argv[argc])
         if (number[0] == rare) {
             numbers_rare =
                 realloc(numbers_rare, (size_numbers_rare + 1) * sizeof(char *));
+
             numbers_rare[size_numbers_rare] = malloc((size + 1) * sizeof(char));
             numbers_rare[size_numbers_rare] = number;
             size_numbers_rare++;
@@ -93,21 +99,22 @@ char *take_number(FILE *input)
     char *number = NULL;
     int length = 0;
     char c;
+    
     int res;
+
     while ((res = fscanf(input, "%c", &c) == 1) && c != '\n') {
         length++;
         number = realloc(number, (length + 1) * sizeof(char));
         number[length - 1] = c;
         number[length] = '\0';
     }
-    // ввод закончен
     if (res == EOF) {
         return NULL;
     }
     return number;
 }
 
-int gamma_epsilon(int *count_of_1, int size, int count)
+int gamma_epsilon(const int *count_of_1, int size, int count)
 {
     int gamma = 0;
     int epsilon = 0;
@@ -126,7 +133,7 @@ int gamma_epsilon(int *count_of_1, int size, int count)
 int to_decimal(char *number)
 {
     int num = 0;
-    int len = strlen(number);
+    int len = (int)strlen(number);
     for (int i = 0; i < len; i++) {
         num = 2 * num + (int)number[i] - (int)'0';
     }
@@ -135,6 +142,7 @@ int to_decimal(char *number)
 
 char often_bit(char **numbers, int size, int j)
 {
+
     int count_1 = 0;
     int count_0 = 0;
     for (int i = 0; i < size; i++) {
@@ -144,26 +152,28 @@ char often_bit(char **numbers, int size, int j)
             count_0 += 1;
         }
     }
-    // единица - самый частый бит
+
     if (count_1 >= count_0) {
         return '1';
     }
     if (count_1 < count_0) {
         return '0';
     }
-    // в случае если равно
+
     return '2';
 }
 
 char *oxygen(char **numbers, int size, int j)
 {
-    // остался только один кандидат
+
     if (size == 1) {
         return numbers[0];
     }
+
     char **new_numbers = NULL;
     int new_size = 0;
-    int len = strlen(numbers[0]);
+
+    int len = (int)strlen(numbers[0]);
     char often = often_bit(numbers, size, j);
     if (often == '2') {
         often = '1';
@@ -180,19 +190,24 @@ char *oxygen(char **numbers, int size, int j)
         }
     }
     free(numbers);
-    // рекурсия
+
     return oxygen(new_numbers, new_size, j + 1);
 }
 
 char *CO2(char **numbers, int size, int j)
 {
+
     if (size == 1) {
         return numbers[0];
     }
+
     char **new_numbers = NULL;
     int new_size = 0;
-    int len = strlen(numbers[0]);
+
+    int len = (int)strlen(numbers[0]);
+
     char rare = often_bit(numbers, size, j);
+
     if (rare == '1' || rare == '2') {
         rare = '0';
     } else {
@@ -210,6 +225,6 @@ char *CO2(char **numbers, int size, int j)
         }
     }
     free(numbers);
-    // рекурсия
+
     return CO2(new_numbers, new_size, j + 1);
 }
